@@ -354,6 +354,24 @@ plt.title("Average total bil and tip by day")
 plt.legend()
 
 ii) KDE plot:
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+*
+mart = pd.read_csv("")
+mart
+*
+mart = mart[['Gender','Payment','Unit price','Quantity','Total','gross income']]
+mart.head(10)
+*
+sns.kdeplot(data=mart, x='Total')
+*
+sns.kdeplot(data=mart, x='Unit price')
+*
+sns.kdeplot(data=mart)
+*
+sns.kdeplot(data=mart,x='Total',hue='Payment',multiple='stack')
 
 
 
@@ -361,10 +379,11 @@ iii) violin plot:
 sns.violinplot (x="day", y="total_bill", hue="smoker", data= tips, linewidth=2, width=0.6,)
 
 iv) Heatmap:
-
-
-
-
+data = np.random.randint(low = 1,high = 100,size = (10,10))
+print("The data to be plotted:\n")
+print(data)
+*
+hm = sns.heatmap(data = data)
 
 6 Data visualization 2
 i) Histogram:
