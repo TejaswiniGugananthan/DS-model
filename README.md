@@ -433,42 +433,6 @@ plt.title("Total bill by day and gender")
 
 
 
-
-# boxcox method:
-import pandas as pd
-from scipy.stats import boxcox
-from scipy.special import inv_boxcox
-df= pd.read_csv('cleaned.csv')
-transformed_variable, lambda_value = boxcox(df['variable_of_interest'])
-df['boxcox_transformed_variable'] = transformed_variable
-df.head()
-
-# yeojohnson method:
-import pandas as pd
-from scipy.stats import yeojohnson
-df= pd.read_csv('Rohi.csv')
-transformed_variable, lambda_value = yeojohnson(df['variable_of_interest'])
-df['yeojohnson_transformed_variable'] = transformed_variable
-df.head()
-
-# line graph:
-import pandas as pd
-df = pd.read_csv('exam.csv')
-plt.plot(x=df['timestamp'], y=df['variable_of_interest'], marker='o', linestyle='-')
-plt.title('Line Graph')
-plt.xlabel('Timestamp')
-plt.ylabel('Variable of Interest')
-plt.show()
-
-# scatter plot:
-import pandas as pd
-df = pd.read_csv('Hod.csv')
-plt.scatter(x=df['timestamp'], y=df['variable_of_interest'],alpha=0.5)
-plt.title('Line Graph')
-plt.xlabel('Timestamp')
-plt.ylabel('Variable of Interest')
-plt.show()
-
 # filter method:
 import pandas as pd
 from sklearn.feature_selection import SelectKBest
@@ -518,6 +482,42 @@ selected_feature = x.columns[sfm.get_support()]
 print("Selected Features:")
 print(selected_feature)
 
+
+
+# boxcox method:
+import pandas as pd
+from scipy.stats import boxcox
+from scipy.special import inv_boxcox
+df= pd.read_csv('cleaned.csv')
+transformed_variable, lambda_value = boxcox(df['variable_of_interest'])
+df['boxcox_transformed_variable'] = transformed_variable
+df.head()
+
+# yeojohnson method:
+import pandas as pd
+from scipy.stats import yeojohnson
+df= pd.read_csv('Rohi.csv')
+transformed_variable, lambda_value = yeojohnson(df['variable_of_interest'])
+df['yeojohnson_transformed_variable'] = transformed_variable
+df.head()
+
+# line graph:
+import pandas as pd
+df = pd.read_csv('exam.csv')
+plt.plot(x=df['timestamp'], y=df['variable_of_interest'], marker='o', linestyle='-')
+plt.title('Line Graph')
+plt.xlabel('Timestamp')
+plt.ylabel('Variable of Interest')
+plt.show()
+
+# scatter plot:
+import pandas as pd
+df = pd.read_csv('Hod.csv')
+plt.scatter(x=df['timestamp'], y=df['variable_of_interest'],alpha=0.5)
+plt.title('Line Graph')
+plt.xlabel('Timestamp')
+plt.ylabel('Variable of Interest')
+plt.show()
 
 
 
