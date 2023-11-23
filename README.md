@@ -419,3 +419,105 @@ sns.barplot(x="day",y="total_bill",hue="sex",data=dt,palette="Set1")
 plt.xlabel('Day of the Week')
 plt.ylabel('Total bill')
 plt.title("Total bill by day and gender")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# boxcox method:
+import pandas as pd
+from scipy.stats import boxcox
+from scipy.special import inv_boxcox
+df= pd.read_csv('cleaned.csv')
+transformed_variable, lambda_value = boxcox(df['variable_of_interest'])
+df['boxcox_transformed_variable'] = transformed_variable
+df.head()
+
+# yeojohnson method:
+import pandas as pd
+from scipy.stats import yeojohnson
+df= pd.read_csv('Rohi.csv')
+transformed_variable, lambda_value = yeojohnson(df['variable_of_interest'])
+df['yeojohnson_transformed_variable'] = transformed_variable
+df.head()
+
+# line graph:
+import pandas as pd
+df = pd.read_csv('exam.csv')
+plt.plot(x=df['timestamp'], y=df['variable_of_interest'], marker='o', linestyle='-')
+plt.title('Line Graph')
+plt.xlabel('Timestamp')
+plt.ylabel('Variable of Interest')
+plt.show()
+
+# scatter plot:
+import pandas as pd
+df = pd.read_csv('Hod.csv')
+plt.scatter(x=df['timestamp'], y=df['variable_of_interest'],alpha=0.5)
+plt.title('Line Graph')
+plt.xlabel('Timestamp')
+plt.ylabel('Variable of Interest')
+plt.show()
+
+# filter method:
+import pandas as pd
+from sklearn.feature_selection import SelectKBest
+from sklearn.feature_selection import chi2
+
+df=pd.read_csv("/content/titanic_dataset.csv")
+
+data=data.dropna()
+
+x=df.drop(["Survived",'Name','Ticket'],axis=1)
+y=df['Survived']
+x
+
+data["Sex"]=data["Sex"].astype("category")
+data["Cabin"]=data["Cabin"].astype("category")
+data[ "Embarked" ]=data ["Embarked"] .astype ("category")
+
+data["Sex"]=data["Sex"].cat.codes
+data["Cabin"]=data["Cabin"].cat.codes
+data[ "Embarked" ]=data ["Embarked"] .cat.codes
+
+data
+
+k=5
+selector = SelectKBest(score_func=chi2,k=k)
+x_new = selector.fit_transform(x,y)
+
+selected_feature_indices = selector.get_support(indices=True)
+
+selected_features=x.columns[selected_feature_indices]
+print("Selected Features: ")
+print(selected_features)
+
+# wrapper method
+import pandas as pd
+from sklearn.feature_selection import SelectFromModel
+from sklearn.ensemble import RandomForestClassifier
+
+model = RandomForestClassifier()
+
+sfm = SelectFromModel(model, threshold='mean')
+
+sfm.fit(x,y)
+
+selected_feature = x.columns[sfm.get_support()]
+
+print("Selected Features:")
+print(selected_feature)
+
+
+
+
