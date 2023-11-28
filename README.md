@@ -1,523 +1,378 @@
 ```
-1 a) Data cleaning process
-import pandas as pd
-df=pd.read_csv("SAMPLEDS - Sheet1 (2).csv")
-*
-df.shape
-*
-df.dropna(how='any').shape
-*
-df.head()
-*
-df.tail()
-*
-x=df.dropna(how='any')
-x
-*
-df.dropna(how='any').shape
-*
-df.dropna(how='all').shape
-*
-tot=df.dropna(subset=['TOTAL'],how='any')
-tot
-*
-tot=df.dropna(subset=['M1','M2','M3','M4'],how='any')
-tot
-*
-df.fillna(0)
-*
-df.fillna(method='ffill')
-*
-df.fillna(method='bfill')
-*
-m=df.TOTAL.mean()
-m
-*
-df.TOTAL.fillna(m,inplace=True)
-df
-*
-df.duplicated()
-*
-df.drop_duplicates(inplace=True)
-df
-*
-df['cd']=pd.to_datetime(df['DOB'])
-df
-*
-for x in df.index:
-  if df.loc[x,"AVG"]>100:
-    df.drop(x,inplace=True)
-df
-*
-import seaborn as sns
-sns.heatmap(df.isnull(),yticklabels=False,annot=True)
+# Eligibility for admission
+using System;
+namespace EngineeringAdmission
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int maths, physics, chemistry;
+            Console.WriteLine("Welcome to Engineering Admission Eligibility Checker");
+            Console.Write("Enter Math marks: ");
+            maths = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Enter Physics marks: ");
+            physics = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Enter Chemistry marks: ");
+            chemistry = Convert.ToInt32(Console.ReadLine());
+            int totalMarks = maths + physics + chemistry;
+            if (maths >= 65 && physics >= 55 && chemistry >= 50)
+            {
+                if (totalMarks >= 180)
+                {
+                    Console.WriteLine("Congratulations! You are eligible for admission.");
+                }
+                else
+                {
+                    Console.WriteLine("Sorry, you are not eligible for admission.");
+                }
+            }
+        }
+    }
+}
+
+# Palindrome
+using System;
+namespace palindrome
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            string s, revs = "";
+            Console.WriteLine("Enter string");
+            s = Console.ReadLine();
+            for (int i = s.Length - 1; i >= 0; i--) //String Reverse  
+            {
+                revs += s[i].ToString();
+            }
+            if (revs == s) // Checking whether string is palindrome or not  
+            {
+                Console.WriteLine("String is Palindrome\nEntered String Was {0} and reverse string is {1}", s, revs);
+            }
+            else
+            {
+                Console.WriteLine("String is not Palindrome\nEntered String Was {0} and reverse string is {1}", s, revs);
+            }
+            Console.ReadKey();
+        }
+    }
+}
+
+# Pattern
+using System;
+public class pattern
+{
+    public static void Main()
+    {
+        int rows, c = 1, a, i, j;
+        Console.Write("rows: ");
+        rows = Convert.ToInt32(Console.ReadLine());
+        for (i = 0; i < rows; i++)
+        {
+            for (a = 1; a <= rows - i; a++)
+            {
+                Console.Write(" ");
+            }
+            for (j = 0; j <= i; j++)
+            {
+                if (j == 0 || i == 0)
+                {
+                    c = 1;
+                }
+                else
+                {
+                    c = c * (i - j + 1) / j;
+                }
+                Console.Write("{0} ", c);
+            }
+            Console.Write("\n");
+        }
+    }
+}
+
+# Constructor
+using System;
+public class Employee
+{
+   public String designation;
+   public String employee_name;
+   public int exp, insurance,bs;
+   double hra, ta, salaryam;
+   public Employee(String employee_name, String designation, int exp, int bs, int i)
+   {
+       this.employee_name = employee_name;
+       this.designation = designation;
+       this.exp = exp;
+       this.bs = bs;
+       this.insurance = i;
+   }
+   public void salary()
+   {
+       hra = this.bs * 0.2;
+       ta = this.bs * 0.1;
+       salaryam = this.bs + hra + ta - this.insurance;
+   }
+   public void display()
+   {
+       Console.WriteLine("Name of the employee is {0} having {1} of experience,working as {2}", this.employee_name, this.exp, this.designation);
+       Console.WriteLine("Receives {0} of salary.", salaryam);
+   }
+}
+class TestEmployee
+{
+   public static void Main(string[] args)
+   {
+       Employee e1 = new Employee("Leann","Tester", 5, 40000, 1000);
+       e1.salary();
+       Employee e2 = new Employee("Adhiradhan", "Developer", 5, 55000, 1000);
+       e2.salary();
+       e1.display();
+       e2.display();
+   }
+}
 
 
-1 b) Multivariate analysis
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-*
-dt = pd.read_csv("/content/titanic_dataset.csv")
-dt
-*
-dt.set_index("PassengerId",inplace=True)
-dt.describe()
-*
-dt.info()
-*
-dt["Survived"].value_counts()
-*
-per=(dt["Survived"].value_counts()/dt.shape[0]*100).round(2)
-per
-*
-sns.catplot(x="Age",col="Survived",kind="count",data=dt)
-*
-fig,ax1=plt.subplots(figsize=(8,5))
-graph = sns.countplot (ax=ax1,data=dt,x="Survived",hue="Pclass",palette="rainbow")
-graph.set_xticklabels(graph.get_xticklabels())
-for p in graph.patches:
-  height = p.get_height()
-  graph.text(p.get_x()+p.get_width()/2,height+20.8,height ,ha="left")
-*
-dt.boxplot(column="Age",by="Survived")
-*
-sns.scatterplot(x=dt["Age"],y=dt["Fare"])
-*
-sns.jointplot(x="Age",y="Fare",data=dt)
-*
-fig,ax1=plt.subplots(figsize=(8,5))
-pt=sns.boxplot(ax=ax1,x='Pclass',y='Age',hue='Parch',data=dt)
-*
-sns.catplot(data=dt,col="Survived",x="Parch",hue='Pclass',kind="count")
-*
-g=sns.catplot(data=dt,col="Survived",x="Parch",hue="Pclass",kind ="count",legend=True)
-g.fig.set_size_inches(8,5)
-g.fig.subplots_adjust(top=0.81,right=0.86)
-ax=g.facet_axis(0,0)
-for p in ax.patches:
-  ax.text(p.get_x()-0.01,p.get_height()*1.02,'{0:.1f}'.
-  format(p.get_height()),color='red',rotation="horizontal",size="small")
-*
-corr = dt.corr()
-sns.heatmap(corr,annot=True)
-*
-sns.pairplot(dt)
+# Jagged array
+using System;
+class jaggedarray
+{
+    public static void Main(String[] args)
+    {
+        int[][] array = new int[4][];
+        array[0] = new int[3];
+        array[1] = new int[5];
+        array[2] = new int[6];
+        array[3] = new int[4];
+        for (int i = 0; i < 4; i++)
+        {
+            for (int j = 0; j < array[i].Length; j++)
+            {
+                array[i][j] = i * j + 70;
+            }
+        }
+        for (int i = 0; i < array.Length; i++)
+        {
+            for (int j = 0; j < array[i].Length; j++)
+            {
+                Console.WriteLine("CPU usage {0} is {1} %" , i + 1, array[i][j]);
+            }
+            Console.WriteLine();
+        }
+    }
+}
+
+# Operator overloading
+using System;
+namespace ConsoleApp8
+{
+   class example
+   {
+       public int length;
+       public example()
+       {
+           length = 10;
+       }
+       public example(int i)
+       {
+           length = i;
+       }
+       public static bool operator ==(example obj1, example obj2)
+       {
+           return obj1.Equals(obj2);
+       }
+       public static bool operator !=(example obj1, example obj2)
+       {
+           return !obj1.Equals(obj2);
+       }
+       public static void Main()
+       {
+           example e1 = new example();
+           example e2 = new example(20);
+           example e3 = new example();
+           example e4 = e3;
+           if (e3 == e4)
+           {
+               Console.WriteLine("Equal");
+           }
+           else if (e3 != e4)
+           {
+               Console.WriteLine("Not equal");
+           }
+       }
+   }
+}
 
 
-2 a) Outline removal
-import pandas as pd
-import seaborn as sns
-*
-age = [1,3,28,27,25,92,30,39,40,50,26,24,29,94]
-af=pd.DataFrame(age)
-af
-*
-sns.boxplot(data=af)
-*
-sns.scatterplot(data=af)
-*
-q1=af.quantile(0.25)
-q2=af.quantile(0.5)
-q3=af.quantile(0.75)
-iqr=q3-q1
-irq=af.quantile(0.5)
-*
-low=q1-1.5*iqr
-low
-*
-high=q3+1.5*iqr
-high
-*
-aq=af[((af>=low)&(af<=high))]
-aq.dropna()
-*
-af=af[((af>=low)&(af<=high))]
-af.dropna()
-*
-sns.boxplot(data=af)
-*
-sns.boxplot(data=af)
-*
-sns.scatterplot(data=af)
-*
-sns.scatterplot(data=af)
+# Recursive fun
+using System;
+namespace rec
+{
+    class Program
+    {
+        int rem = 0, rev = 0;
+        public int reverse(int n)
+        {
+            rem = n % 10;
+            if (rem == 0)
+            {
+                return rev;
+            }
+            else
+            {
+                rev = rev * 10 + rem;
+                return reverse(n / 10);
+            }
+        }
+        static void Main(string[] args)
+        {
+            int n;
+            Console.WriteLine("Enter a Number to reverse: ");
+            n = Convert.ToInt32(Console.ReadLine());
+            Program p1 = new Program();
+            Console.WriteLine("Reversed Number is " + p1.reverse(n));
+        }
+    }
+}
+# Inheritance
+using System;
+namespace inheri
+{
+    public class tyre
+    {
+        public virtual void display()
+        {
+            Console.Write("Tyre has been inserted:");
+        }
+    }
+    class Scooter : tyre
+    {
+        public override void display()
+        {
+            base.display(); 
+            Console.WriteLine("scooter ");
+        }
+    }
+    class Car : tyre
+    {
+        public override void display()
+        {
+            base.display();
+            Console.WriteLine("car ");
+        }
+    }
+    class program
+    {
+        static void Main()
+        {
+            Scooter s = new Scooter();
+            s.display();
+            Car c = new Car();
+            c.display();
+        }
+    }
+}
 
+# Interface
+using System;
+public interface Bank
+{
+    void deposit();
+    void withdrawal();
+}
+class Program : Bank
+{
+    int amount, ch, balance = 2000;
+    public Program()
+    {
+        Console.WriteLine("1.Deposit\n2.Withdrawal");
+        ch = Convert.ToInt32(Console.ReadLine());
+        if (ch == 1)
+        {
+            deposit();
+        }
+        else
+        {
+            withdrawal();
+        }
+    }
+    public void withdrawal()
+    {
+        int amount = Convert.ToInt32(Console.ReadLine());
+        balance -= amount;
+        Console.WriteLine(balance);
+    }
+    public void deposit()
+    {
+        int amount = Convert.ToInt32(Console.ReadLine());
+        balance += amount;
+        Console.WriteLine(balance);
+    }
+}
+class example
+{
+    public static void Main()
+    {
+        Program c = new Program();
+        c.deposit();
+        c.withdrawal();
+    }
+}
 
-2 b) Univariate analyais
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-*
-df=pd.read_csv("/content/iris (1).csv")
-*
-df.nunique()
-*
-df.head()
-*
-df.tail()
-*
-df.iloc[:,4].value_counts()
-*
-for i in range(0,df.shape[1]):
-  print("-----------",df.columns[i],"------------")
-  print(df.iloc[:,i].value_counts())
-  print("---------------------------------------")
-*
-sns.countplot(x='species',data=df)
-*
-dfv=df.loc[df['species']=='virginica']
+# file
+using System;
+using System.IO;
+struct student
+{
+    public string name;
+    public int age;
+    public string department;
+    public int percentage;
+};
+class HelloWorld
+{
 
-plt.plot(dfv['sepal_length'],np.zeros_like(dfv['sepal_length']),'*')
-plt.xlabel('sepal length')
-plt.show()
-plt.plot(df_setosa['sepal_length'],np.zeros_like(df_setosa['sepal_length']),'o')
-*
-dfv=df.loc[df['species']=='virginica']
+    void writer(string name, int age, string department, int percentage, int i)
+    {
+        FileStream fs = new FileStream("file.txt", FileMode.Append, FileAccess.Write);
+        StreamWriter sw = new StreamWriter(fs);
+        sw.WriteLine("Name of the student {0} is {1}", i, name);
+        sw.WriteLine("Age of the student {0} is {1}", i, age);
+        sw.WriteLine("Department of the student {0} is {1}", i, department);
+        sw.WriteLine("percentage of the student {0} is {1}", i, percentage);
 
-plt.plot(dfv['sepal_length'],np.zeros_like(dfv['sepal_length']),'*')
-plt.xlabel('sepal length')
-plt.show()
-##plt.plot(df_setosa['sepal_length'],np.zeros_like(df_setosa['sepal_length']),'o')
-*
-dfs=df.loc[df['species']=='setosa']
-dfc=df.loc[df['species']=='versicolor']
-
-plt.plot(dfs['sepal_length'],np.zeros_like(dfs['sepal_length']),'*')
-plt.plot(dfc['sepal_length'],np.zeros_like(dfc['sepal_length']),'X')
-*
-plt.plot(dfv['sepal_length'],np.zeros_like(dfv['sepal_length']),'o')
-plt.plot(dfs['sepal_length'],np.zeros_like(dfs['sepal_length']),'*')
-plt.plot(dfc['sepal_length'],np.zeros_like(dfc['sepal_length']),'X')
-plt.xlabel('petal_length')
-plt.show()
-*
-plt.plot(dfv['sepal_length'],np.zeros_like(dfv['sepal_length']),'o')
-plt.plot(dfs['sepal_length'],np.zeros_like(dfs['sepal_length']),'+')
-plt.plot(dfc['sepal_length'],np.zeros_like(dfc['sepal_length']),'-')
-plt.xlabel('SEPALLENGTH')
-plt.show()
-
-
-3 a) Z score 
-
-import pandas as pd
-import numpy as np
-import seaborn as sns
-import pandas as pd
-from scipy import stats
-*
-data = {'weight':[12,15,18,21,24,27,30,33,36,39,42,45,48,51,54,57,60,63,69,202,72,75,78,81,84,232,87,90,93,96,99,258]}
-df=pd.DataFrame(data)
-df
-*
-sns.boxplot(data=df)
-*
-z=np.abs(stats.zscore(df))
-print(df[z['weight']>3])
-*
-val=[12,15,18,21,24,27,30,33,36,39,42,45,48,51,54,57,60,63,69,202,72,75,78,81,84,232,87,90,93,96,99,258]
-df=pd.DataFrame(data)
-*
-out=[]
-def d_o(val):
-  ts=3
-  m=np.mean(val)
-  sd=np.std(val)
-  for i in val:
-    z=(i-m)/sd
-    if np.abs(z)>ts:
-      out.append(i)
-  return out
-*
-op=d_o(val)
-op
-*
-from scipy import stats
-*
-id=pd.read_csv("iris.csv")
-id
-*
-sns.boxplot(x='sepal_width',data=id)
-*
-c1=id.sepal_width.quantile(0.25)
-c3=id.sepal_width.quantile(0.75)
-iq=c3-c1
-print(c3)
-*
-rid=id[((id.sepal_width<(c1-1.5*iq))|(id.sepal_width>(c3+1.5*iq)))]
-rid['sepal_width']
-*
-delid=id[~((id.sepal_width<(c1-1.5*iq))|(id.sepal_width>(c3+1.5*iq)))]
-delid
-*
-sns.boxplot(x='sepal_width',data=delid)
-
-
-3 b) feature generation
-i) standard scaler:
-import pandas as pd
-from scipy import stats
-import numpy as np
-*
-df=pd.read_csv("/content/bmi.csv")
-*
-from sklearn.preprocessing import StandardScaler
-sc=StandardScaler()
-df[['Height','Weight']]=sc.fit_transform(df[['Height','Weight']])
-df.head(10)
-*
-ii) onehot encoder:
-from sklearn.preprocessing import OneHotEncoder
-*
-ohe=OneHotEncoder(sparse=False)
-ohe.fit_transform(df[["nom_0"]])
-*
-iii) robust scaler:
-from sklearn.preprocessing import RobustScaler
-rs=RobustScaler()
-df=pd.DataFrame(rs.fit_transform(df),columns=['Height','Weight','Index'])
-df
-
-
-4 Data transformation
-i) 2 methods in func transformation:
-import pandas as pd
-from scipy import stats
-import numpy as np
-*
-df=pd.read_csv("/content/Data_to_Transform.csv")
-df
-*
-df.skew()
-*
-np.log(df["Highly Positive Skew"])
-*
-np.reciprocal(df["Moderate Negative Skew"])
-*
-np.sqrt(df["Highly Positive Skew"])
-*
-np.square(df["Highly Positive Skew"])
-*
-df["Highly Positive Skew_boxcox"],parameter=stats.boxcox(df["Highly Positive Skew"])
-df
-*
-df["Moderate Negative Skew_yeojohnson"],parameters=stats.yeojohnson(df["Moderate Negative Skew"])
-from sklearn.preprocessing import QuantileTransformer
-qt=QuantileTransformer(output_distribution='normal')
-*
-df["Moderate Negative Skew_1"]=qt.fit_transform(df[["Moderate Negative Skew"]])
-df
-*
-import matplotlib.pyplot as plt
-import seaborn as sns
-import statsmodels.api as sm
-import scipy.stats as stats
-*
-sm.qqplot(df['Moderate Negative Skew'],line='45')
-plt.show()
-*
-sm.qqplot(df['Moderate Negative Skew_1'],line='45')
-plt.show()
-*
-df['Highly Negative Skew_1']=qt.fit_transform(df[["Highly Negative Skew"]])
-sm.qqplot(df['Highly Negative Skew'],line='45')
-plt.show()
-*
-sm.qqplot(df['Highly Negative Skew_1'],line='45')
-plt.show()
-
-
-5 Data visualization 1
-i) bar chart in matplot and seaborn
-import matplotlib.pyplot as plt
-height=[10,24,36,40,5]
-names=["one","two","three","four","five"]
-c1=["red","green"]
-c2=["b","g"]
-plt.bar(names,height,width=0.8,color=c1)
-plt.xlabel("x-axis")
-plt.ylabel("y-axis")
-plt.title("My Bar chart!!!!!!!!!!!!")
-*
-import seaborn as sns
-tips= sns.load_dataset("tips")
-avg_total_bill = tips.groupby("day")['total_bill'].mean()
-avg_tip =tips.groupby('day')['tip'].mean()
-plt.figure(figsize=(8, 6))
-p1 = plt.bar(avg_total_bill.index, avg_total_bill, label='Total Bill')
-p2 = plt.bar(avg_tip.index, avg_tip, bottom=avg_total_bill, label='Tip')
-plt.xlabel('Day of the Week')
-plt.ylabel('Amount')
-plt.title("Average total bil and tip by day")
-plt.legend()
-
-ii) KDE plot:
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-*
-mart = pd.read_csv("")
-mart
-*
-mart = mart[['Gender','Payment','Unit price','Quantity','Total','gross income']]
-mart.head(10)
-*
-sns.kdeplot(data=mart, x='Total')
-*
-sns.kdeplot(data=mart, x='Unit price')
-*
-sns.kdeplot(data=mart)
-*
-sns.kdeplot(data=mart,x='Total',hue='Payment',multiple='stack')
-
-
-
-iii) violin plot:
-sns.violinplot (x="day", y="total_bill", hue="smoker", data= tips, linewidth=2, width=0.6,)
-
-iv) Heatmap:
-data = np.random.randint(low = 1,high = 100,size = (10,10))
-print("The data to be plotted:\n")
-print(data)
-*
-hm = sns.heatmap(data = data)
-
-6 Data visualization 2
-i) Histogram:
-import matplotlib.pyplot as plt
-ages=[2,5,70,40,30,45,50,45,43,40,44,60,7,13,57,18,90,77,32,21,20,40]
-range=(0,100)
-bins=10
-plt.hist(ages,bins,range,color="green",histtype="bar",rwidth=0.8)
-plt.xlabel("age")
-plt.ylabel("No.of.People")
-plt.title("My Histogram")
-
-
-ii) Scatter plot:
-import matplotlib.pyplot as plt
-x_values = [0,1,2,3,4,5]
-y_values = [0,1,4,9,16,25]
-plt.scatter (x_values, y_values, s=30, color="blue")
-plt.show()
-*
-import seaborn as sns
-tips = sns.load_dataset('tips')
-sns.scatterplot(x= 'total_bill', y='tip', hue='sex',data=tips)
-plt.xlabel('Total Bill')
-plt.ylabel('Tip Amount')
-plt.title('Scatter Plot of Total Bill vs. Tip Amount')
-
-iii)Barplot:
-import seaborn as sns
-dt=sns.load_dataset("tips")
-sns.barplot(x="day",y="total_bill",hue="sex",data=dt,palette="Set1")
-plt.xlabel('Day of the Week')
-plt.ylabel('Total bill')
-plt.title("Total bill by day and gender")
+        sw.Close();
+        fs.Close();
+    }
+    static void Main()
+    {
+        int n, i;
+        FileStream fs = new FileStream("file.txt", FileMode.Create, FileAccess.Write);
+        fs.Close();
+        Console.WriteLine("Enter the number of Students");
+        n = Convert.ToInt32(Console.ReadLine());
+        student[] s = new student[n];
+        for (i = 0; i < n; i++)
+        {
+            Console.WriteLine("Enter the name");
+            s[i].name = Console.ReadLine();
+            Console.WriteLine("Enter the age");
+            s[i].age = Convert.ToInt32(Console.ReadLine());
+            Console.WriteLine("Enter the department");
+            s[i].department = Console.ReadLine();
+            Console.WriteLine("Enter the percentage");
+            s[i].percentage = Convert.ToInt32(Console.ReadLine());
+            HelloWorld hw = new HelloWorld();
+            hw.writer(s[i].name, s[i].age, s[i].department, s[i].percentage, i + 1);
+            Console.WriteLine();
+        }
+    }
+}
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-# filter method:
-import pandas as pd
-from sklearn.feature_selection import SelectKBest
-from sklearn.feature_selection import chi2
-
-df=pd.read_csv("/content/titanic_dataset.csv")
-
-data=data.dropna()
-
-x=df.drop(["Survived",'Name','Ticket'],axis=1)
-y=df['Survived']
-x
-
-data["Sex"]=data["Sex"].astype("category")
-data["Cabin"]=data["Cabin"].astype("category")
-data[ "Embarked" ]=data ["Embarked"] .astype ("category")
-
-data["Sex"]=data["Sex"].cat.codes
-data["Cabin"]=data["Cabin"].cat.codes
-data[ "Embarked" ]=data ["Embarked"] .cat.codes
-
-data
-
-k=5
-selector = SelectKBest(score_func=chi2,k=k)
-x_new = selector.fit_transform(x,y)
-
-selected_feature_indices = selector.get_support(indices=True)
-
-selected_features=x.columns[selected_feature_indices]
-print("Selected Features: ")
-print(selected_features)
-
-# wrapper method
-import pandas as pd
-from sklearn.feature_selection import SelectFromModel
-from sklearn.ensemble import RandomForestClassifier
-
-model = RandomForestClassifier()
-
-sfm = SelectFromModel(model, threshold='mean')
-
-sfm.fit(x,y)
-
-selected_feature = x.columns[sfm.get_support()]
-
-print("Selected Features:")
-print(selected_feature)
-
-
-
-# boxcox method:
-import pandas as pd
-from scipy.stats import boxcox
-from scipy.special import inv_boxcox
-df= pd.read_csv('cleaned.csv')
-transformed_variable, lambda_value = boxcox(df['variable_of_interest'])
-df['boxcox_transformed_variable'] = transformed_variable
-df.head()
-
-# yeojohnson method:
-import pandas as pd
-from scipy.stats import yeojohnson
-df= pd.read_csv('Rohi.csv')
-transformed_variable, lambda_value = yeojohnson(df['variable_of_interest'])
-df['yeojohnson_transformed_variable'] = transformed_variable
-df.head()
-
-# line graph:
-import pandas as pd
-df = pd.read_csv('exam.csv')
-plt.plot(x=df['timestamp'], y=df['variable_of_interest'], marker='o', linestyle='-')
-plt.title('Line Graph')
-plt.xlabel('Timestamp')
-plt.ylabel('Variable of Interest')
-plt.show()
-
-# scatter plot:
-import pandas as pd
-df = pd.read_csv('Hod.csv')
-plt.scatter(x=df['timestamp'], y=df['variable_of_interest'],alpha=0.5)
-plt.title('Line Graph')
-plt.xlabel('Timestamp')
-plt.ylabel('Variable of Interest')
-plt.show()
 
 
 
